@@ -36,8 +36,17 @@ function describeArc(cx: number, cy: number, radius: number, startAngle: number,
 function formatWorkLabel(item: EmployeeWorkSummaryItem) {
   const code = item.work_code?.trim() ?? "";
   const name = item.work_name?.trim() ?? "";
+  const combined = `${code} ${name}`.toLowerCase();
 
   if (!code && !name) return "-";
+
+  if (
+    ["plucker", "plk", "pl"].includes(code.toLowerCase()) ||
+    combined.includes("pluck")
+  ) {
+    return "Plucker";
+  }
+
   if (!name) return code;
   if (!code) return name;
   if (name.toLowerCase() === code.toLowerCase()) return code;
